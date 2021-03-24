@@ -1,0 +1,10 @@
+Authors of pam-blue.
+
+See also the files THANKS and ChangeLog.
+
+o Hagen Paul Pfeifer designed and implemented pam-blue
+o David De Sousa implement timeout handling and non-blocking state to the socket
+o Tim Otto extend the scan routine
+o Some other guys give some sugestions and also add code
+
+

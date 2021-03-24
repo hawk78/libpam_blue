@@ -1,0 +1,94 @@
+# Copyright (C) 2003 Hagen Paul Pfeifer <hagen@jauu.net>
+#  
+# This file is free software; as a special exception the author gives
+# unlimited permission to copy and/or distribute it, with or without 
+# modifications, as long as this notice is preserved.
+# 
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY, to the extent permitted by law; without even the
+# implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+AC_INIT(src/utils.c)
+
+AM_CONFIG_HEADER(config.h)
+
+AC_PREFIX_DEFAULT("/usr")
+
+AM_INIT_AUTOMAKE(pam_blue,0.9.0)
+
+
+dnl
+dnl User Options
+dnl
+AC_ARG_ENABLE(debug, [ --enable-debug   set compiler flags to -g],[
+                CFLAGS="-g"; debug_flags="-DDEBUG"])
+
+dnl Check for bleutooth headers
+AC_CHECK_HEADERS(bluetooth/bluetooth.h, , , [[#if HAVE_BLUETOOTH_H
+                                              # include <bluetooth/bluetooth.h>
+                                              #endif
+                                            ]])
+
+AC_CHECK_LIB(bluetooth, hci_open_dev, ,AC_ERROR("Bluetooth library required. bluez-libs -> www.bluez.org") )
+
+dnl Check for serveral programs
+AC_PROG_CC
+dnl AC_PROG_MAKE_SET
+
+dnl Check for bsd install
+AC_PROG_INSTALL
+
+dnl
+dnl bib_stuff
+dnl
+    
+
+for top_builddir in . .. ../.. $ac_auxdir $ac_auxdir/..; do
+test -f $top_builddir/configure && break
+done
+  
+AC_DISABLE_STATIC
+AC_PROG_LIBTOOL
+
+
+dnl Check for standard C headers
+AC_HEADER_STDC
+
+dnl Check for misc headers
+AC_CHECK_HEADERS(unistd.h string.h security/pam_modules.h errno.h syslog.h io.h)
+
+dnl Check fot serveral functions
+AC_FUNC_ALLOCA
+
+AC_CHECK_FUNC(bzero,     AC_DEFINE(HAVE_BZERO,     1, "Defined if you have bzero func"))
+
+dnl Check for several types and guess our byte ordering
+AC_CHECK_SIZEOF(unsigned int)
+AC_CHECK_SIZEOF(unsigned long)
+
+dnl AC_C_BIGENDIAN
+
+AC_CHECK_TYPE(int)
+AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+
+
+dnl Check for lex and yacc
+AM_PROG_LEX
+AC_PROG_YACC
+
+dnl Environment seems fine, blue_pam now doing final substitution
+
+BLUEPAM_CONFDIR='${sysconfdir}'
+
+AC_DEFINE(BLUEPAM_CONFDIR, "${sysconfdir}", "bluepam configuration file")
+
+
+AC_SUBST(LIBTOOL)
+AC_SUBST(LIBTOOL_DEPS)
+AC_SUBST(CFLAGS)
+AC_SUBST(CWALL)
+AC_SUBST(HAVE_BZERO)
+AC_SUBST(BLUEPAM_CONFDIR)
+
+AC_OUTPUT(Makefile src/Makefile data/Makefile doc/Makefile)

@@ -1,0 +1,3 @@
+version=3
+http://pam.0xdef.net/source.html \
+	source/pam_blue-([\d\.]*).tar.bz2

@@ -1,0 +1,3 @@
+# well, rm -f config.log :)
+libpam-blue source: configure-generated-file-in-source config.log
+

@@ -1,0 +1,23 @@
+Source: libpam-blue
+Section: admin
+Priority: extra
+Maintainer: Ulises Vitulli <uvitulli@fi.uba.ar>  
+Build-Depends: debhelper (>= 5), autotools-dev, automake, autoconf, 
+ libbluetooth-dev, libpam0g-dev, libtool
+Standards-Version: 3.8.4
+Homepage: http://pam.0xdef.net/
+
+Package: libpam-blue
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, bluez
+Description: PAM module for local authenticaction with bluetooth devices
+ pam_blue is a dynamically loadable binary object for the PAM security
+ framework in Linux. It is presented as an extension for the common PAM
+ modules, gives the user the ability for authenticate via a
+ Bluetooth-compatible device like a cell phone or other bluetooth
+ dongles (e.g. epox-presenter). Due to the fact that a whole part of
+ the Bluetooth stack is implemented in hardware-side it is relatively
+ difficult to change the Bluetooth hardware MAC address which makes
+ this module more secure.
+
+

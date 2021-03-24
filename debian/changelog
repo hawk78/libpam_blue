@@ -1,0 +1,49 @@
+libpam-blue (0.9.0-3) unstable; urgency=low
+
+  * New maintainer (Closes: #580313).
+  * Bump Debian Policy up to 3.8.4 (no changes needed).
+  * Stick to dpkg-source 3.0 (quilt) format. 
+  * Few minor package modifications:
+    - Better handler of errors on cleaning targets.
+    - Point to correct GPL-2 license file.
+    - Switched to UTF8 copyright symbol.
+    - Fix on watch file (Notice: upstream download page seems offline).
+
+ -- Ulises Vitulli <uvitulli@fi.uba.ar>  Fri, 07 May 2010 13:18:08 -0300
+
+libpam-blue (0.9.0-2.3) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Switch to autoreconf -i and sanitize debian/rules (Closes: #543087)
+
+ -- Filippo Giunchedi <filippo@debian.org>  Sat, 17 Oct 2009 17:23:54 +0100
+
+libpam-blue (0.9.0-2.2) unstable; urgency=low
+
+  * Non-maintainer upload.
+  * Relibtoolize via libtoolize -cfv (Closes: #527503)
+  * Build-depend on libbluetooth-dev instead of libbluetooth2-dev
+    (Closes: #532274)
+  * Depend on bluez instead of bluez-utils (Closes: #534320) 
+
+ -- Filippo Giunchedi <filippo@debian.org>  Tue, 23 Jun 2009 17:16:14 +0200
+
+libpam-blue (0.9.0-2.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Removing src/.deps in the clean target (Closes: #489496) 
+
+ -- Bernd Zeimetz <bzed@debian.org>  Mon, 11 Aug 2008 23:46:57 +0200
+
+libpam-blue (0.9.0-2) unstable; urgency=low
+
+  * Change depending of Automake1.8 to automake.
+
+ -- Carlos Alberto Silombria Ibarra <silverdog@gmail.com>  Sun, 27 Apr 2008 15:48:57 +0400
+
+libpam-blue (0.9.0-1) unstable; urgency=low
+
+  * Initial release (Closes: #419493)
+
+ -- Carlos Alberto Silombria Ibarra <silverdog@gmail.com>  Thu, 31 May 2007 05:11:19 +0000
+
