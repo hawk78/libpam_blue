@@ -102,17 +102,24 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags,
    */
   
   lst_mbrp = lst->head;
+  reterror = "User not found in configuration file [" CONFIG_FILE "]!";
   for(i = 0; i < lst_size(lst); i++) {
     bptr = (struct entrybuff *) lst_mbrp->data;
     if (! strcmp(bptr->name, user)) { /* found user in list */
-      reterror = NULL;
-      retval = PAM_SUCCESS;
-      break;
+      reterror = "User found in configuration file [" CONFIG_FILE "], but scan failed!";
+      /* TODO: add some error return codes for speparate logging */
+      if (bluescan(bptr) > 0) {
+        if (debug)
+          syslog (LOG_ERR, "scan succeed for user %s!", user);
+        user = NULL;
+        lst_destroy(lst);
+        return PAM_SUCCESS;
+      } else { /* failure */
+        syslog (LOG_ERR, "Bluetooth scan failure [bluetooth device %s up?]", bptr->btmac);
+      }
     }
-    reterror = "User not found in configuration file [" CONFIG_FILE "]!";
     lst_mbrp = lst_mbrp->next;
   }
-
 
   if (reterror) { /* free struct, log and return failure */
     user = NULL;
@@ -120,20 +127,6 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags,
     syslog (LOG_ERR, "%s", reterror);
     return PAM_AUTH_ERR;
 
-  } else  {
-    /* TODO: add some error return codes for speparate logging */
-    if (bluescan(bptr) > 0) {
-      if (debug)
-        syslog (LOG_ERR, "scan succeed for user %s!", user);
-      user = NULL;
-      lst_destroy(lst);
-      return PAM_SUCCESS;
-    } else { /* failure */
-      user = NULL;
-      lst_destroy(lst);
-      syslog (LOG_ERR, "Bluetooth scan failure [bluetooth device up?]");
-      return PAM_AUTH_ERR;
-    }
   }
 
   /* catch all rule */
@@ -141,8 +134,6 @@ pam_sm_authenticate(pam_handle_t *pamh, int flags,
   lst_destroy(lst);
   syslog (LOG_ERR, "Programmed failure!!!");
   return PAM_AUTH_ERR;
-  
-
 }
 
 PAM_EXTERN
